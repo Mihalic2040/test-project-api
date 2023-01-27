@@ -11,8 +11,12 @@ services:
       build:
         context: ./WEBAPP
       ports:
-        "8000:8000"
-      command: [ "python3", "./src/manage.py", "runserver", "0.0.0.0:8000" ]
+        - "8000:8000"
+      command: [ "python3", "./src/API/manage.py", "runserver", "0.0.0.0:8000" ]
 
-
-        
+  worker:
+      restart: always
+      build:
+        context: ./WEBAPP
+      command: ["celery", "--workdir=./src/API/", "-A", "main", "worker"]
+       

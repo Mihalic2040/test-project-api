@@ -9,12 +9,15 @@
  - Redis
  - PostgreSQL
 
-# Dependencies
-
+# Build and Run
 ```
-```        
-
+sudo docker-compose up --build 
+```
+      
 # ToDo
+
+
+- [x] Build system with docker
 
 - [ ] User can register in system (Email activation)
 - [ ] User can log in/log out to the system
