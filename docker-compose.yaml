@@ -1,0 +1,18 @@
+version: '20.10'
+
+
+services:
+  redis:
+    image: redis
+    restart: always
+    
+  main_api:
+      restart: always
+      build:
+        context: ./WEBAPP
+      ports:
+        "8000:8000"
+      command: [ "python3", "./src/manage.py", "runserver", "0.0.0.0:8000" ]
+
+
+        
