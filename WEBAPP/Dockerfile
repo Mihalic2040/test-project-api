@@ -11,4 +11,5 @@ RUN pip install -r requirements.txt
 COPY ./src ./src
 
 
+
 CMD [ "python3", "./src/API/manage.py", "runserver", "0.0.0.0:8000" ]

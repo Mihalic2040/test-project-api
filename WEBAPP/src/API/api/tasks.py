@@ -9,5 +9,5 @@ from celery import shared_task
 
 @shared_task()
 def log_console():
-    print("Im log")
+    print("From django main Hello world")
     return True

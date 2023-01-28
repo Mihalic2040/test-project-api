@@ -7,4 +7,4 @@ def home(request):
 
     tasks.log_console.delay()
 
-    return HttpResponse("Hello im task")
+    return HttpResponse("Hello World")
