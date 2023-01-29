@@ -5,7 +5,7 @@ from rest_framework import generics
 from api.serializers import RegistrationSerializer
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework import serializers
+
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User
 from .utils import Utils
