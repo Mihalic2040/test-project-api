@@ -39,9 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    #'rest_framework_swagger',
     'rest_framework_simplejwt',
     'api',
-
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -181,3 +182,13 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=30),
 }
+
+
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "mihabevza111b@gmail.com"  # TEMP MAIL
+EMAIL_HOST_PASSWORD = "PmcJNHpC"
+
+AUTH_USER_MODEL = "api.User"

@@ -24,15 +24,20 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
     TokenVerifyView
 )
+from .yasg import urlpatterns as swagger_path
+from api.views import EmailActivation
+
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    
     path('api-auth/', include('rest_framework.urls')),
-    path('', views.home),
-    path('api/v1.0/aunt/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    #path('', views.home),
     path('api/v1.0/aunt/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/v1.0/aunt/token/verify/', TokenVerifyView.as_view(), name= "token_verify"),
-    path('api/v1.0/auth/register', RegisterApi.as_view(), name="register"),
+    path('api/v1.0/auth/register/', RegisterApi.as_view(), name="register"),
+    path('api/v1.0/aunt/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/v1.0/aunt/email-activator/', EmailActivation.as_view, name ="email-activator"),   
+] + swagger_path
 
-]

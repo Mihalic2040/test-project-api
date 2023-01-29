@@ -11,3 +11,9 @@ from celery import shared_task
 def log_console():
     print("From django main Hello world")
     return True
+
+
+
+@shared_task
+def email_activator(email, data):
+    pass
