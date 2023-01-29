@@ -5,12 +5,16 @@ services:
   redis:
     image: redis
     restart: always
+    ports:
+      - 6379:6379
   
   postgres:
     image: postgres
     restart: always
     environment:
       POSTGRES_PASSWORD: qwerty
+    ports:
+      - 5432:5432
 
   postgres_admin:
     image: adminer
@@ -18,24 +22,24 @@ services:
     ports:
       - 8001:8080
 
-  main_api:
-      restart: always
-      build:
-        context: ./WEBAPP
-      ports:
-        - "8000:8000"
-      depends_on:
-        - postgres
-      links:
-        - postgres:postgres
-      #command: ["python3", "./src/API/manage.py", "migrate"]
-      #command: ["python3", "./src/API/manage.py", "runserver", "0.0.0.0:8000"]
-      command: ["python3", "./src/API/manage.py", "runserver", "0.0.0.0:8000"]
+  #main_api:
+  #    restart: always
+  #    build:
+  #      context: ./WEBAPP
+  #    ports:
+  #      - "8000:8000"
+  #    depends_on:
+  #      - postgres
+  #    links:
+  #      - postgres:postgres
+  #    command: ["python3", "./src/API/manage.py", "migrate"]
+  #    command: ["python3", "./src/API/manage.py", "runserver", "0.0.0.0:8000"]
+  #    command: ["python3", "./src/API/manage.py", "runserver", "0.0.0.0:8000"]
       
 
 
-  worker:
-      restart: always
-      build:
-        context: ./WEBAPP
-      command: ["celery", "--workdir=./src/API/", "-A", "main", "worker"]
+  #worker:
+  #    restart: always
+  #    build:
+  #      context: ./WEBAPP
+  #    command: ["celery", "--workdir=./src/API/", "-A", "main", "worker"]

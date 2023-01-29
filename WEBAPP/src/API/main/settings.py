@@ -85,7 +85,7 @@ DATABASES = {
         'NAME': 'test-project-api',
         'USER': 'postgres',
         'PASSWORD': 'qwerty',
-        'HOST': 'postgres',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
@@ -132,7 +132,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-CELERY_BROKER_URL = "redis://redis:6379"
+CELERY_BROKER_URL = "redis://localhost:6379"
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,

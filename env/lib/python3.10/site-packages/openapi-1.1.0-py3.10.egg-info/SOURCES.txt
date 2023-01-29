@@ -1,0 +1,17 @@
+LICENSE
+MANIFEST.in
+README.md
+setup.cfg
+setup.py
+openapi/__init__.py
+openapi/base.py
+openapi/model.py
+openapi/naming.py
+openapi/registry.py
+openapi.egg-info/PKG-INFO
+openapi.egg-info/SOURCES.txt
+openapi.egg-info/dependency_links.txt
+openapi.egg-info/not-zip-safe
+openapi.egg-info/requires.txt
+openapi.egg-info/top_level.txt
+openapi/schemas/v2.0/schema.json

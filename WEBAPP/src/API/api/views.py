@@ -1,5 +1,5 @@
 from asyncio import tasks
-import email
+
 from . import tasks
 from rest_framework import generics
 from api.serializers import RegistrationSerializer
