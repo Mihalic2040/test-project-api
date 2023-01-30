@@ -189,6 +189,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "mihabevza111b@gmail.com"  # TEMP MAIL
-EMAIL_HOST_PASSWORD = "PmcJNHpC"
+EMAIL_HOST_PASSWORD = "vjhpfltpuhugzkff"
 
 AUTH_USER_MODEL = "api.User"

@@ -50,14 +50,14 @@ class RegisterApi(generics.GenericAPIView):
 
             relative_link = reverse("email-activator")
             
-            absurl = "http://"+current_site+relative_link+"?token= " + str(token)
+            absurl = "http://"+str(current_site)+relative_link+"?token= " + str(token)
 
             email_body = "To activate account click this link: \n" + absurl 
 
             data = {
                 "to_email": user.email,
                 "email_body": email_body,
-                "subject": "Verify your email",
+                "email_subject": "Verify your email",
             }
                 
             Utils.send_mail(data=data)
