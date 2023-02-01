@@ -28,6 +28,11 @@ class UserManager(BaseUserManager):
         user.is_staff = True
         user.save()
         return user
+    
+    def activete_user(self, data):
+        if data is None:
+            raise TypeError('your nicname is None set nicname')
+        
 
 
 
@@ -36,6 +41,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=255, unique=True, db_index=True)
     email = models.EmailField(max_length=255, unique=True, db_index=True)
+    otp = models.CharField(max_length=255, null=True, db_index=True)
     is_verified = models.BooleanField(default=True)
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)

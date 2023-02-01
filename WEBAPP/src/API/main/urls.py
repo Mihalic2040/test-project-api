@@ -38,6 +38,6 @@ urlpatterns = [
     path('api/v1.0/aunt/token/verify/', TokenVerifyView.as_view(), name= "token_verify"),
     path('api/v1.0/auth/register/', RegisterApi.as_view(), name="register"),
     path('api/v1.0/aunt/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/v1.0/aunt/email-activator/', EmailActivation.as_view, name ="email-activator"),   
+    path('api/v1.0/aunt/email-activator/', EmailActivation.as_view(), name ="email-activator"),   
 ] + swagger_path
 
