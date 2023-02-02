@@ -2,10 +2,10 @@ from asyncio import tasks
 
 from . import tasks
 from rest_framework import generics
-from api.serializers import RegistrationSerializer, ActivationSerializer
+from api.serializers import *
 from rest_framework.response import Response
 from rest_framework import status
-
+from django.contrib.auth.hashers import make_password
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User
 from .utils import Utils
@@ -22,13 +22,8 @@ def home(request):
     return Response("Hello World")
 
 
-class RegisterView(generics.GenericAPIView):
 
-
-    def post(self, request):
-        user = request.data
         
-
 
 class RegisterApi(generics.GenericAPIView):
 
@@ -44,23 +39,12 @@ class RegisterApi(generics.GenericAPIView):
 
             user = User.objects.get(email=User_data['email'])
 
-            token = RefreshToken.for_user(user).access_token
-
-            current_site = get_current_site(request)
-
-            relative_link = reverse("email-activator")
-            
-            absurl = "http://"+str(current_site)+relative_link+"?token= " + str(token)
-
-            email_body = "To activate account click this link: \n" + absurl 
-
             data = {
                 "to_email": user.email,
-                "email_body": email_body,
                 "email_subject": "Verify your email",
             }
                 
-            Utils.send_mail(data=data)
+            Utils.activate_mail(data=data)
 
             return Response({
                 "msg": "Check email to verify account!"
@@ -74,7 +58,7 @@ class RegisterApi(generics.GenericAPIView):
 
 
 
-class EmailActivation(generics.UpdateAPIView):
+class EmailActivation(generics.GenericAPIView):
 
     serializer_class = ActivationSerializer
 
@@ -110,3 +94,91 @@ class EmailActivation(generics.UpdateAPIView):
             return Response({
             'msg': 'Account is active now!'
             }, status=status.HTTP_200_OK)
+        
+        return Response({
+            "msg": 'Something went wrong'
+        },status=status.HTTP_400_BAD_REQUEST)
+    
+
+class PasswordReseterCode(generics.GenericAPIView):
+
+    serializer_class = ChangePasswordSerializer
+
+    def post(self, request):
+        data = request.data
+        serializer = self.get_serializer(data=data)
+
+        if (serializer.is_valid()):
+            
+            User_data = serializer.data
+            email = User_data['email']
+
+            user = User.objects.filter(email= email)
+            user_mail = User.objects.get(email=User_data['email'])
+            if not user.exists():
+                return Response({
+                    'msg': 'This User not exists'
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+            data = {
+                "to_email": user_mail.email,
+                "email_subject": "Password reset code!",
+            }
+
+            Utils.reset_pass(data=data)
+
+            return Response({
+                'msg': 'Check email to see a restore code.'
+            },status=status.HTTP_200_OK)
+
+
+        return Response({
+            'msg': 'Someting went wrong'
+        },status=status.HTTP_400_BAD_REQUEST)
+        
+
+
+class PasswordReseter(generics.UpdateAPIView):
+
+    serializer_class = ChangePasswordSerializerPUT
+
+    def put(self, request):
+        data = request.data
+        serializer = self.get_serializer(data=data)
+
+        if (serializer.is_valid()):
+            User_data = serializer.data
+            email = User_data['email']
+            otp = User_data['otp']
+            new_password = User_data['new_password']
+
+
+            
+            user = User.objects.filter(email= email)
+
+            if not user.exists():
+                return Response({
+                    'msg': 'This User not exists'
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+            if user[0].otp != otp:
+                return Response({
+                    'msg': "Invalid reset code"
+                },status=status.HTTP_400_BAD_REQUEST)
+            
+            user = user.first()
+
+            hash_password = make_password(new_password)
+
+            user.password = str(hash_password)
+
+            user.save()
+
+            return Response({
+                'msg': 'Passoword has been cahnged!'
+            },status=status.HTTP_200_OK)
+
+        return Response({
+            'msg': 'Someting went wrong'
+        },status=status.HTTP_400_BAD_REQUEST)
+

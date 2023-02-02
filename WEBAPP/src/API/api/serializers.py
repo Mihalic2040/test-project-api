@@ -31,3 +31,23 @@ class ActivationSerializer(serializers.Serializer):
     otp = serializers.CharField()
 
 
+class ChangePasswordSerializer(serializers.Serializer):
+    model = User
+
+    """
+    Serializer for password change endpoint.
+    """
+    email = serializers.EmailField(required=True)
+   
+
+
+
+class ChangePasswordSerializerPUT(serializers.Serializer):
+    model = User
+
+    """
+    Serializer for password change endpoint.
+    """
+    email = serializers.EmailField(required=True)
+    otp = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)

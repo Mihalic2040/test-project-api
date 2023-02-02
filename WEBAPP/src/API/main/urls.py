@@ -25,7 +25,7 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView
 )
 from .yasg import urlpatterns as swagger_path
-from api.views import EmailActivation
+from api.views import *
 
 
 
@@ -38,6 +38,8 @@ urlpatterns = [
     path('api/v1.0/aunt/token/verify/', TokenVerifyView.as_view(), name= "token_verify"),
     path('api/v1.0/auth/register/', RegisterApi.as_view(), name="register"),
     path('api/v1.0/aunt/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/v1.0/aunt/email-activator/', EmailActivation.as_view(), name ="email-activator"),   
+    path('api/v1.0/aunt/email-activator/', EmailActivation.as_view(), name ="email-activator"),
+    path('api/v1.0/aunt/reset-password/code', PasswordReseterCode.as_view(), name ="reset-password-get-code"),
+    path('api/v1.0/aunt/reset-password/reset', PasswordReseter.as_view(), name ="reset-password"),
 ] + swagger_path
 
