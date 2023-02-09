@@ -77,3 +77,14 @@ class GetPostByIdSerializer(serializers.Serializer):
     class Meta:
         model = Post
         fields = ('id',)
+
+
+class UpdatePostSerializer(serializers.Serializer):
+
+    model = Post
+
+    id = serializers.CharField(required=True)
+
+    title = serializers.CharField(required=True)
+
+    content = serializers.CharField(required=True)

@@ -256,8 +256,45 @@ class GetPostById(generics.GenericAPIView):
                 "post_date": post[0].post_date,
             }
 
-            return Response(post_structure)
+            return Response(post_structure,status=status.HTTP_200_OK)
         
+
+        return Response({
+            'msg': 'Something went wrong or wrong id'
+        },status=status.HTTP_400_BAD_REQUEST)
+    
+
+class UpdatePost(generics.UpdateAPIView):
+
+    permission_classes = [permissions.IsAuthenticated,]
+
+    serializer_class = UpdatePostSerializer
+
+    def put(self,request):
+        data = request.data
+
+        serializer = self.get_serializer(data=data)
+
+        if(serializer.is_valid()):
+            main_post = Post.objects.filter(id=data['id'])
+
+            if main_post[0].owner_id == request.user.id:
+
+                post = main_post.first()
+
+                post.title = data['title']
+
+                post.content = data['content']
+
+                post.save()
+
+                return Response({
+                    'msg': "Post updated"
+                },status=status.HTTP_200_OK)
+
+            return Response({
+                    'msg': "You can update only own post"
+                },status=status.HTTP_400_BAD_REQUEST)
 
         return Response({
             'msg': 'Something went wrong or wrong id'

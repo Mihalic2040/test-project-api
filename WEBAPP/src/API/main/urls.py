@@ -43,6 +43,7 @@ urlpatterns = [
     path('api/v1.0/aunt/reset-password/reset', PasswordReseter.as_view(), name ="reset-password"),
     path('api/v1.0/post/all', GetPost.as_view(), name ="Get all posts"),
     path('api/v1.0/post/create', CreatePost.as_view(), name ="Create Own posts"),
-    path('api/v1.0/post/id', GetPostById.as_view(), name="Get_post_by_id")
+    path('api/v1.0/post/id', GetPostById.as_view(), name="Get_post_by_id"),
+    path('api/v1.0/post/update', UpdatePost.as_view(), name="Update_post_by_id")
 ] + swagger_path
 
