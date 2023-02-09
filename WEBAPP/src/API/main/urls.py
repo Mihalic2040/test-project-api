@@ -36,10 +36,13 @@ urlpatterns = [
     #path('', views.home),
     path('api/v1.0/aunt/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/v1.0/aunt/token/verify/', TokenVerifyView.as_view(), name= "token_verify"),
-    path('api/v1.0/auth/register/', RegisterApi.as_view(), name="register"),
+    path('api/v1.0/aunt/register/', RegisterApi.as_view(), name="register"),
     path('api/v1.0/aunt/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/v1.0/aunt/email-activator/', EmailActivation.as_view(), name ="email-activator"),
     path('api/v1.0/aunt/reset-password/code', PasswordReseterCode.as_view(), name ="reset-password-get-code"),
     path('api/v1.0/aunt/reset-password/reset', PasswordReseter.as_view(), name ="reset-password"),
+    path('api/v1.0/post/all', GetPost.as_view(), name ="Get all posts"),
+    path('api/v1.0/post/create', CreatePost.as_view(), name ="Create Own posts"),
+    path('api/v1.0/post/id', GetPostById.as_view(), name="Get_post_by_id")
 ] + swagger_path
 

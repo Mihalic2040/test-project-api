@@ -37,7 +37,13 @@ sudo docker-compose run main_api python3 ./src/API/manage.py migrate
 - [x] User can log in/log out to the system (JWT token only)
 - [x] User can change/reset password (Email)
 - [ ] User can create and edit own posts
-- [ ] User can see the posts from other users
+
+    - [x] Create post
+    - [x] Post all
+    - [x] Post by id
+    - [ ] Update post data
+
+- [x] User can see the posts from other users
 - [ ] User can add and remove a like from users posts (except own)
 - [ ] User can update own profile
 - [ ] Add Search by post title

@@ -64,3 +64,16 @@ class User(AbstractBaseUser, PermissionsMixin):
             'access': str(refresh.access_token)
 
         }
+    
+
+class Post(models.Model):
+    owner = models.ForeignKey('User', related_name='posts', on_delete=models.CASCADE)
+    title = models.CharField(max_length=15)
+    content = models.CharField(max_length=40000)
+    post_date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return self.content
+
+
+    

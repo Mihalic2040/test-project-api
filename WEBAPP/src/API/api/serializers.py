@@ -1,7 +1,7 @@
 
 from rest_framework import serializers
 from .models import User
-
+from .models import Post
 class RegistrationSerializer(serializers.ModelSerializer):
     
     #email = serializers.EmailField(_MAX_LENGTH=50, _MIN_END_LEN=6)
@@ -51,3 +51,29 @@ class ChangePasswordSerializerPUT(serializers.Serializer):
     email = serializers.EmailField(required=True)
     otp = serializers.CharField(required=True)
     new_password = serializers.CharField(required=True)
+
+
+class GetPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ('id','owner_id','title','content','post_date',)
+
+
+class CreatePostSerializer(serializers.Serializer):
+
+    model = Post
+ 
+
+    title = serializers.CharField(required=True)
+
+    content = serializers.CharField(required=True)
+
+    def create(self, validated_data):
+        return Post.objects.create(**validated_data)
+    
+class GetPostByIdSerializer(serializers.Serializer):
+    id = serializers.CharField(required=True)
+
+    class Meta:
+        model = Post
+        fields = ('id',)
