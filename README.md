@@ -45,8 +45,8 @@ sudo docker-compose run main_api python3 ./src/API/manage.py migrate
 
 - [x] User can see the posts from other users
 - [ ] User can add and remove a like from users posts (except own)
-- [ ] User can update own profile
-- [ ] Add Search by post title
+- [x] User can update own profile
+- [x] Add Search by post title
 - [x] Connect swagger docs
 - [ ] Flake8
 

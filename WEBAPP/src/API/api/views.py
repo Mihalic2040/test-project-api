@@ -12,7 +12,9 @@ from .utils import Utils
 from django.contrib.sites.shortcuts import  get_current_site
 from django.urls import reverse
 from rest_framework import viewsets, permissions
-
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
+from django.contrib.postgres.operations import TrigramExtension
 # Create your views here.
 
 def home(request):
@@ -298,4 +300,99 @@ class UpdatePost(generics.UpdateAPIView):
 
         return Response({
             'msg': 'Something went wrong or wrong id'
+        },status=status.HTTP_400_BAD_REQUEST)
+    
+
+class GetProfileById(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated,]
+
+    serializer_class = GetProfileSerializer
+
+    def post(self, request):
+        data = request.data
+
+        serializer = self.get_serializer(data=data)
+
+        if (serializer.is_valid()):
+            user = User.objects.filter(id=data['id'])
+
+            returned_data = {
+                'id': user[0].id,
+                'nickname': user[0].username
+            }
+
+            return Response(returned_data,status=status.HTTP_200_OK)
+
+        return Response({
+            'msg': 'Something went wrong or wrong id'
+        },status=status.HTTP_400_BAD_REQUEST)
+    
+
+class UpdateProfile(generics.UpdateAPIView):
+    permission_classes = [permissions.IsAuthenticated,]
+
+    serializer_class = UpdateProfileSerializer
+
+    def put(self, request):
+        data = request.data
+        serializer = self.get_serializer(data=data)
+
+        if (serializer.is_valid()):
+
+            user = User.objects.filter(id=request.user.id)
+
+            main_user = user.first()
+
+            main_user.username = data['username']
+
+            main_user.save()
+
+            return Response({
+                'msg': 'Profile Updated'
+            },status=status.HTTP_200_OK)
+        return Response({
+            'msg': 'Something went wrong'
+        },status=status.HTTP_400_BAD_REQUEST)
+    
+
+
+class SearchPost(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated,]
+    queryset = Post.objects.all()
+    serializer_class = SearchPostSerializer
+
+    def post(self, request):
+        
+        data = request.data
+        serializer = self.get_serializer(data=data)
+
+        if (serializer.is_valid()):
+            queryset = self.get_queryset()
+            q_serializer = GetPostSerializer(queryset, many=True)
+            all_data = q_serializer.data
+
+
+            title_list = []
+            for item in all_data:
+                title_list.append(item['title'])
+
+            extraxted_data_raw = process.extract(data['title'], title_list)
+
+            extraxted_data = extraxted_data_raw[0]
+            extraxted_data = extraxted_data[0]
+
+            post_obj = Post.objects.filter(title=extraxted_data)
+
+            post =  {
+                "id": post_obj[0].id,
+                "owner_id": post_obj[0].owner_id,
+                "title": post_obj[0].title,
+                "content": post_obj[0].content,
+                "post_date": post_obj[0].post_date,
+            }
+
+            return Response(post)
+
+        return Response({
+            'msg': 'Something went wrong'
         },status=status.HTTP_400_BAD_REQUEST)

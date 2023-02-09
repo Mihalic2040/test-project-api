@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'api',
     'drf_yasg',
+    'django.contrib.postgres',
 ]
 
 MIDDLEWARE = [

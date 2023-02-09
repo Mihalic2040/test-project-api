@@ -88,3 +88,21 @@ class UpdatePostSerializer(serializers.Serializer):
     title = serializers.CharField(required=True)
 
     content = serializers.CharField(required=True)
+
+class GetProfileSerializer(serializers.Serializer):
+
+    model = User
+
+    id = serializers.CharField(required=True)
+
+class UpdateProfileSerializer(serializers.Serializer):
+
+    model = User
+
+    username = serializers.CharField(required=True)
+
+class SearchPostSerializer(serializers.Serializer):
+
+    model = Post
+
+    title = serializers.CharField(required=True)

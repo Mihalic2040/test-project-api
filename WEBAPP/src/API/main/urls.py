@@ -44,6 +44,9 @@ urlpatterns = [
     path('api/v1.0/post/all', GetPost.as_view(), name ="Get all posts"),
     path('api/v1.0/post/create', CreatePost.as_view(), name ="Create Own posts"),
     path('api/v1.0/post/id', GetPostById.as_view(), name="Get_post_by_id"),
-    path('api/v1.0/post/update', UpdatePost.as_view(), name="Update_post_by_id")
+    path('api/v1.0/post/update', UpdatePost.as_view(), name="Update_post_by_id"),
+    path('api/v1.0/post/search', SearchPost.as_view(), name="Search_post_by_title"),
+    path('api/v1.0/profile/id', GetProfileById.as_view(), name="Get_profile_by_id"),
+    path('api/v1.0/profile/update', UpdateProfile.as_view(), name="Update_profile_username"),
 ] + swagger_path
 
