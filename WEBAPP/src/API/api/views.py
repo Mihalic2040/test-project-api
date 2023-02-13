@@ -1,29 +1,14 @@
-from asyncio import tasks
-
-from . import tasks
 from rest_framework import generics
 from api.serializers import *
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.hashers import make_password
-from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User
 from .utils import Utils
-from django.contrib.sites.shortcuts import  get_current_site
-from django.urls import reverse
-from rest_framework import viewsets, permissions
-from fuzzywuzzy import fuzz
+from rest_framework import permissions
 from fuzzywuzzy import process
-from django.contrib.postgres.operations import TrigramExtension
+
 # Create your views here.
-
-def home(request):
-
-    tasks.log_console.delay()
-
-    return Response("Hello World")
-
-
 
 class RegisterApi(generics.GenericAPIView):
 

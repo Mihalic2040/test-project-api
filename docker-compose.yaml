@@ -4,11 +4,11 @@ volumes:
   postgres_data:
 
 services:
-  redis:
-    image: redis
-    restart: always
-    ports:
-      - 6379:6379
+  #redis:
+  #  image: redis
+  #  restart: always
+  #  ports:
+  #    - 6379:6379
   
   postgres:
     image: postgres
@@ -26,19 +26,19 @@ services:
     ports:
       - 8001:8080
 
-  #main_api:
-  #    restart: always
-  #    build:
-  #      context: ./WEBAPP
-  #    ports:
-  #      - "8000:8000"
-  #    depends_on:
-  #      - postgres
-  #    links:
-  #      - postgres:postgres
+  main_api:
+      restart: always
+      build:
+        context: ./WEBAPP
+      ports:
+        - "8000:8000"
+      depends_on:
+        - postgres
+      links:
+        - postgres:postgres
   #    command: ["python3", "./src/API/manage.py", "migrate"]
   #    command: ["python3", "./src/API/manage.py", "runserver", "0.0.0.0:8000"]
-  #    command: ["python3", "./src/API/manage.py", "runserver", "0.0.0.0:8000"]
+      command: ["python3", "./src/API/manage.py", "runserver", "0.0.0.0:8000"]
       
 
 

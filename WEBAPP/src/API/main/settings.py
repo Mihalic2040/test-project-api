@@ -86,7 +86,7 @@ DATABASES = {
         'NAME': 'test-project-api',
         'USER': 'postgres',
         'PASSWORD': 'qwerty',
-        'HOST': 'localhost',
+        'HOST': 'postgres',
         'PORT': '5432',
     }
 }

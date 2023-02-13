@@ -28,11 +28,9 @@ class UserManager(BaseUserManager):
         user.is_staff = True
         user.save()
         return user
-    
     def activete_user(self, data):
         if data is None:
             raise TypeError('your nicname is None set nicname')
-        
 
 
 
