@@ -2,6 +2,7 @@
 from rest_framework import serializers
 from .models import User
 from .models import Post
+from .models import Like
 class RegistrationSerializer(serializers.ModelSerializer):
     
     #email = serializers.EmailField(_MAX_LENGTH=50, _MIN_END_LEN=6)
@@ -106,3 +107,15 @@ class SearchPostSerializer(serializers.Serializer):
     model = Post
 
     title = serializers.CharField(required=True)
+
+class SetLikeSerializer(serializers.Serializer):
+
+    model = Like
+
+    post_id = serializers.CharField(required=True)
+
+class GetLikesSerializer(serializers.Serializer):
+
+    model = Like
+
+    post_id = serializers.CharField(required=True)

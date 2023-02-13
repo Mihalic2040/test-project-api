@@ -76,4 +76,6 @@ class Post(models.Model):
         return self.content
 
 
-    
+class Like(models.Model):
+    owner = models.ForeignKey('User', on_delete=models.CASCADE)
+    post_id = models.ForeignKey('Post', on_delete=models.CASCADE)

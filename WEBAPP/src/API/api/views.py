@@ -391,7 +391,70 @@ class SearchPost(generics.GenericAPIView):
                 "post_date": post_obj[0].post_date,
             }
 
-            return Response(post)
+            return Response(post, status=status.HTTP_200_OK)
+
+        return Response({
+            'msg': 'Something went wrong'
+        },status=status.HTTP_400_BAD_REQUEST)
+    
+
+class SetLike(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated,]
+
+    serializer_class = SetLikeSerializer
+
+    def post(self, request):
+        data = request.data
+        serializer = self.get_serializer(data=data)
+
+        if (serializer.is_valid()):
+            post_obj = Post.objects.get(id=data['post_id'])
+            if request.user.id != post_obj.owner_id:
+                if Like.objects.filter(owner=request.user.id, post_id=post_obj.id).exists():
+                    Like.objects.filter(owner=request.user.id, post_id=post_obj.id).delete()
+                    return Response({
+                        'msg': 'Like Unset'
+                    },status=status.HTTP_200_OK)
+                else:
+                    Like.objects.create(owner=request.user, post_id=post_obj)
+                    return Response({
+                        'msg': 'Like set'
+                    },status=status.HTTP_200_OK)
+
+            return Response({
+                'msg': 'You can not like own post'
+            },status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({
+            'msg': 'Something went wrong'
+        },status=status.HTTP_400_BAD_REQUEST)
+    
+
+class GetLikes(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated,]
+
+    serializer_class = GetLikesSerializer
+
+    def post(self,request):
+        data = request.data
+        serializer = self.get_serializer(data=data)
+
+
+        if (serializer.is_valid()):
+            likes = Like.objects.filter(post_id=data['post_id'])
+            
+
+            like_list = likes
+
+            final_data = []
+            for item in likes:
+                final_data.append(str(item.owner_id))
+
+
+            return Response({
+                'data': str(final_data)
+            },status=status.HTTP_200_OK)
+        
 
         return Response({
             'msg': 'Something went wrong'
